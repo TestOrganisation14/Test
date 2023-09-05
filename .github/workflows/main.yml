@@ -16,25 +16,39 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0  # Important: this fetches all commits and branches
 
-    - name: Fetch and checkout base branch dynamically
+    - name: Debug and Check for rebase requirement
       run: |
+        echo "---- Fetching branches ----"
+        git fetch --all
+    
+        echo "---- Listing all branches ----"
+        git branch -a
+    
+        echo "---- Git Status ----"
+        git status
+    
+        echo "---- Last 5 commits ----"
+        git log --oneline -5
+    
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
-        git fetch origin $BASE_BRANCH:$BASE_BRANCH  # This fetches and creates a local copy of the dynamic base branch
-        git checkout $BASE_BRANCH  # Optional: switch to the local base branch
-
-    - name: Check for rebase requirement
-      run: |
-        BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+        echo "BASE_BRANCH: $BASE_BRANCH"
+    
         HEAD_SHA=$(git rev-parse HEAD)
-        BASE_SHA=$(git rev-parse $BASE_BRANCH)  
+        echo "HEAD_SHA: $HEAD_SHA"
+    
+        BASE_SHA=$(git rev-parse $BASE_BRANCH)
+        echo "BASE_SHA: $BASE_SHA"
+    
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
-        
+        echo "COMMON_ANCESTOR: $COMMON_ANCESTOR"
+    
         if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ] && [ $(git rev-list --count $COMMON_ANCESTOR..$HEAD_SHA) -eq 0 ]; then
           echo "Branch is up to date. No rebase needed."
         else
           echo "Branch is not up to date. Please rebase before merging."
           exit 1
         fi
+      
 
 
       
