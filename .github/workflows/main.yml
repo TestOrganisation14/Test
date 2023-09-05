@@ -15,11 +15,14 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0  # Important: this fetches all commits and branches
-
-    - name: Debug and Check for rebase requirement
+    - name: Debug
       run: |
+        git status
         git branch -a
-
+        git log --oneline -n 5
+      
+    - name: Check for rebase requirement
+      run: |
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
         echo "BASE_BRANCH: $BASE_BRANCH"
     
