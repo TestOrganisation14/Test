@@ -15,24 +15,19 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Debugging information
-      run: |
-        git branch -a
-        git log --oneline -5
-
     - name: Check for rebase
       run: |
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
-        echo "Base branch is $BASE_BRANCH"  # Debug line
-        git fetch origin $BASE_BRANCH
-        COMMON_BASE=$(git merge-base $BASE_BRANCH HEAD)
-        LATEST_BASE_COMMIT=$(git rev-parse $BASE_BRANCH)
+        git fetch origin $BASE_BRANCH # Fetching the base branch explicitly
+        COMMON_BASE=$(git merge-base HEAD remotes/origin/$BASE_BRANCH) # Using the remote reference
+        LATEST_BASE_COMMIT=$(git rev-parse remotes/origin/$BASE_BRANCH) # Using the remote reference
         if [[ "$COMMON_BASE" == "$LATEST_BASE_COMMIT" ]]; then
           echo "Feature branch is up to date with $BASE_BRANCH."
         else
-          echo "Feature branch is not rebased on top of $BASE_BRANCH."
-          git rebase $BASE_BRANCH || (echo "Failed to rebase. Please rebase manually." && exit 1)
+          echo "Feature branch is not rebased on top of $BASE_BRANCH. Please rebase manually."
+          exit 1
         fi
+      
       
       
   build:
