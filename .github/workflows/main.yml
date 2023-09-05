@@ -42,4 +42,12 @@ jobs:
           exit 1
         fi
 
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This permission is required for requesting the web token without which you can't access the aws 
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
     
