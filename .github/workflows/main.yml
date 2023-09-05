@@ -6,6 +6,42 @@ on:
       - 'rc_*'  # Adjust this pattern to match your rc_ branch naming convention
   
 jobs:
+  check-base:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0  # Important: this fetches all commits and branches
+    - name: Debug
+      run: |
+        git status
+        git branch -a
+        git log --oneline -n 5
+      
+    - name: Check for rebase requirement
+      run: |
+        BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+        echo "BASE_BRANCH: $BASE_BRANCH"
+    
+        HEAD_SHA=$(git rev-parse HEAD)
+        echo "HEAD_SHA: $HEAD_SHA"
+
+        BASE_SHA=$(git rev-parse remotes/origin/$BASE_BRANCH)
+        echo "BASE_SHA: $BASE_SHA"
+
+        COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
+        echo "COMMON_ANCESTOR: $COMMON_ANCESTOR"
+
+        if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ] ; then
+          echo "Branch is up to date. No rebase needed."
+        else
+          echo "Branch is not up to date. Please rebase before merging."
+          exit 1
+        fi
+
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -14,3 +50,4 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+    
