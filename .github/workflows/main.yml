@@ -6,7 +6,7 @@ on:
       - 'rc_*'  # Adjust this pattern to match your rc_ branch naming convention
   
 jobs:
-  check-base:
+  check:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,21 +17,22 @@ jobs:
         fetch-depth: 0  # fetch all commits
 
     - name: Fetch base branch
-      run: git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+      run: git fetch origin rc_1.0  # make sure to fetch rc_1.0
 
     - name: Check for rebase requirement
       run: |
-        BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+        BASE_BRANCH=rc_1.0  # should be available after fetch
         HEAD_SHA=$(git rev-parse HEAD)
         BASE_SHA=$(git rev-parse $BASE_BRANCH)
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
-
+        
         if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ]; then
           echo "Branch is up to date. No rebase needed."
         else
           echo "Branch is not up to date. Please rebase before merging."
           exit 1
         fi
+      
 
       
   build:
