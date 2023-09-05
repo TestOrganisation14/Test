@@ -13,35 +13,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.pull_request.head.ref }}
+        # ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0  # Important: this fetches all commits and branches
 
     - name: Debug and Check for rebase requirement
       run: |
-        echo "---- Fetching branches ----"
-        git fetch --all
-    
-        echo "---- Listing all branches ----"
-        git branch -a
-    
-        echo "---- Git Status ----"
-        git status
-    
-        echo "---- Last 5 commits ----"
-        git log --oneline -5
     
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
         echo "BASE_BRANCH: $BASE_BRANCH"
     
         HEAD_SHA=$(git rev-parse HEAD)
-        echo "HEAD_SHA: $HEAD_SHA"
     
         BASE_SHA=$(git rev-parse remotes/origin/$BASE_BRANCH)
-        echo "BASE_SHA: $BASE_SHA"
-
     
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
-        echo "COMMON_ANCESTOR: $COMMON_ANCESTOR"
     
         if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ] && [ $(git rev-list --count $COMMON_ANCESTOR..$HEAD_SHA) -eq 0 ]; then
           echo "Branch is up to date. No rebase needed."
@@ -49,12 +34,7 @@ jobs:
           echo "Branch is not up to date. Please rebase before merging."
           exit 1
         fi
-      
 
-
-      
-
-      
   build:
     runs-on: ubuntu-latest
     permissions:
