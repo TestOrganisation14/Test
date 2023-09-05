@@ -18,7 +18,8 @@ jobs:
 
     - name: Debug and Check for rebase requirement
       run: |
-    
+        git branch -a
+
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
         echo "BASE_BRANCH: $BASE_BRANCH"
     
