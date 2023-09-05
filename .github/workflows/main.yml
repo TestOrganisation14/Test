@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        # ref: ${{ github.event.pull_request.head.ref }}
+        ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: 0  # Important: this fetches all commits and branches
 
     - name: Debug and Check for rebase requirement
