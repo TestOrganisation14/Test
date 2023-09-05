@@ -6,7 +6,7 @@ on:
       - 'rc_*'  # Adjust this pattern to match your rc_ branch naming convention
   
 jobs:
-  check:
+  check-base:
     runs-on: ubuntu-latest
 
     steps:
