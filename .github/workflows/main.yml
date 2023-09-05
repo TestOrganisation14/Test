@@ -29,7 +29,7 @@ jobs:
         BASE_SHA=$(git rev-parse $BASE_BRANCH)  
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
         
-        if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ]; then
+        if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ] && [ $(git rev-list --count $COMMON_ANCESTOR..$HEAD_SHA) -eq 0 ]; then
           echo "Branch is up to date. No rebase needed."
         else
           echo "Branch is not up to date. Please rebase before merging."
