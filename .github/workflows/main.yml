@@ -10,28 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
+    - name: Checkout code
       uses: actions/checkout@v2
       with:
         ref: ${{ github.event.pull_request.head.ref }}
-        fetch-depth: 0  # fetch all commits
+        fetch-depth: 0  # Important: this fetches all commits and branches
 
     - name: Fetch base branch
-      run: git fetch origin rc_1.0  # make sure to fetch rc_1.0
+      run: |
+        git fetch origin rc_1.0  # Make sure to fetch rc_1.0
+        git branch -a  # Debug: list all branches to verify rc_1.0 is fetched
 
     - name: Check for rebase requirement
       run: |
-        BASE_BRANCH=rc_1.0  # should be available after fetch
+        BASE_BRANCH=rc_1.0
         HEAD_SHA=$(git rev-parse HEAD)
-        BASE_SHA=$(git rev-parse $BASE_BRANCH)
+        BASE_SHA=$(git rev-parse $BASE_BRANCH)  # This line is failing
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
         
         if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ]; then
           echo "Branch is up to date. No rebase needed."
         else
-          echo "Branch is not up to date. Please rebase before merging."
-          exit 1
-        fi
+          echo "Branch is not up to date. Please rebase
+
       
 
       
