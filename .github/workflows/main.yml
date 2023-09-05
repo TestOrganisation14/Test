@@ -36,7 +36,7 @@ jobs:
         HEAD_SHA=$(git rev-parse HEAD)
         echo "HEAD_SHA: $HEAD_SHA"
     
-        BASE_SHA=$(git rev-parse $BASE_BRANCH)
+        BASE_SHA=$(git rev-parse remote/origin/$BASE_BRANCH)
         echo "BASE_SHA: $BASE_SHA"
     
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
