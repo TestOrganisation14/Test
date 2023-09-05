@@ -27,9 +27,12 @@ jobs:
         echo "BASE_BRANCH: $BASE_BRANCH"
     
         HEAD_SHA=$(git rev-parse HEAD)
-    
+        
+        echo "Debug: All branches"
+        git branch -a
+
         BASE_SHA=$(git rev-parse remotes/origin/$BASE_BRANCH)
-    
+        
         COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
     
         if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ] && [ $(git rev-list --count $COMMON_ANCESTOR..$HEAD_SHA) -eq 0 ]; then
