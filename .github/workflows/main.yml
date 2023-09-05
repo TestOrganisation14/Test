@@ -27,9 +27,10 @@ jobs:
         echo "BASE_BRANCH: $BASE_BRANCH"
     
         HEAD_SHA=$(git rev-parse HEAD)
-        
-        echo "Debug: All branches"
-        git branch -a
+
+        echo "Debug: BASE_SHA Calculation"
+        echo "git rev-parse remotes/origin/$BASE_BRANCH"
+
 
         BASE_SHA=$(git rev-parse remotes/origin/$BASE_BRANCH)
         
