@@ -6,37 +6,33 @@ on:
       - 'rc_*'  # Adjust this pattern to match your rc_ branch naming convention
   
 jobs:
-  check-rebase:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Check out code
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0  # fetch all branches
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0  # fetch all commits
 
-    - name: Fetch the base branch
-      run: |
-        git fetch origin ${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}
+    - name: Fetch base branch
+      run: git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
 
-    - name: Check for rebase
+    - name: Check for rebase requirement
       run: |
         BASE_BRANCH=${{ github.event.pull_request.base.ref }}
-        echo "BASE_BRANCH=$BASE_BRANCH"
-        COMMON_BASE=$(git merge-base HEAD $BASE_BRANCH)
-        echo "COMMON_BASE=$COMMON_BASE"
-        LATEST_BASE_COMMIT=$(git rev-parse $BASE_BRANCH)
-        echo "LATEST_BASE_COMMIT=$LATEST_BASE_COMMIT"
-        
-        if [[ "$COMMON_BASE" == "$LATEST_BASE_COMMIT" ]]; then
-          echo "Feature branch is up to date with $BASE_BRANCH."
+        HEAD_SHA=$(git rev-parse HEAD)
+        BASE_SHA=$(git rev-parse $BASE_BRANCH)
+        COMMON_ANCESTOR=$(git merge-base $HEAD_SHA $BASE_SHA)
+
+        if [ "$COMMON_ANCESTOR" = "$BASE_SHA" ]; then
+          echo "Branch is up to date. No rebase needed."
         else
-          echo "Feature branch is not rebased on top of $BASE_BRANCH. Please rebase manually."
+          echo "Branch is not up to date. Please rebase before merging."
           exit 1
         fi
-      
-      
-      
+
       
   build:
     runs-on: ubuntu-latest
