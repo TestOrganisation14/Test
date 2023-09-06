@@ -1,11 +1,7 @@
 
 # Workflow & Usage Documentation
 
----
-
 ## **Mandatory Build check for RC merge by** PR Validation for `rc_*` branch
-
----
 
 ### 1. Introduction
 
