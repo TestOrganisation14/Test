@@ -53,7 +53,7 @@ The mandatory validation workflow activates automatically whenever a PR targetin
 
 ### 5. Best Practices and Compliance
 
-- **Review IAM Permissions**: IAM roles and permissions should be reviewed quarterly to ensure they adhere to the least-privilege principle.
-- **Documentation**: Always document any changes made to the GitHub Actions or AWS CodeBuild configurations for audit and compliance purposes.
+- **Review IAM Permissions**: IAM roles and permissions should be reviewed regularly to ensure they adhere to the least-privilege permission which is required.
+- **Documentation**: Always document any changes made to the GitHub Actions or AWS CodeBuild configurations for audit purposes.
 
 ---
