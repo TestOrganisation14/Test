@@ -14,7 +14,7 @@ jobs:
       
     - name: Check for README.md
       run: |
-        if [[ -f README.md ] || [ -f readme.md ]]; then
+        if [[ -f README.md || -f readme.md ]]; then
           echo "README.md exists. Proceeding with workflow."
           # Add your other workflow steps here
         else
