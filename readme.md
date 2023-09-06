@@ -20,7 +20,7 @@ The mandatory validation workflow activates automatically whenever a PR targetin
 
 ### 3. Step-by-Step Workflow
 
-### 3.1 PR Submission and Initial Checks
+### 3.1 Pull Request Submission and Initial Checks
 
 1. **Developer Action**: A developer submits a PR targeting an `rc_*` branch.
 2. **Automated Trigger**: GitHub Actions detect the PR and initialize the validation process.
