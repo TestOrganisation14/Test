@@ -1,4 +1,4 @@
-name: Build check for RC merge 
+name: check
 
 on:
   pull_request:
@@ -14,8 +14,8 @@ jobs:
       contents: read
       # this permission should be set to be able get commits data by curl request
       pull-requests: read
+      
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v2
         with:
