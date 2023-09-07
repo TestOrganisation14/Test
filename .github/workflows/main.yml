@@ -3,7 +3,7 @@ name: Build check for RC merge
 on:
   pull_request:
     branches:
-      - 'rs_*'  # Adjust this pattern to match your rc_ branch naming convention
+      - 'rc_*'  # Adjust this pattern to match your rc_ branch naming convention
   
 jobs: 
   Check-for-Build:
