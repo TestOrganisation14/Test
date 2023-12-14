@@ -21,7 +21,7 @@ jobs:
           git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py
           git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
           LAST_TWO_COMMITS=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
-          PREVIOUS_CONTENT=$(git show $LAST_TWO_COMMITS^:./docs/DocGenerator.py)
+          PREVIOUS_CONTENT=$(git show ${LAST_TWO_COMMITS}~1:./docs/DocGenerator.py)
           CURRENT_CONTENT=$(git show $LAST_TWO_COMMITS:./docs/DocGenerator.py)
 
       - name: Set up Python
