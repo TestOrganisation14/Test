@@ -38,5 +38,5 @@ jobs:
 
       - name: Run Python script
         run: |
-          python ./.github/scripts/changelog_generator.py "$PREVIOUS_CONTENT" "$CURRENT_CONTENT"
+          python ./.github/scripts/changelog_generator.py "$PREVIOUS_CONTENT" "$CURRENT_CONTENT" v1.0 Rajkumar
           python ./.github/scripts/config_table_generator.py "$CURRENT_CONTENT"
