@@ -20,10 +20,13 @@ jobs:
         run: |
           git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
           LAST_TWO_COMMITS=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
-          git checkout ${LAST_TWO_COMMITS}^ -- ./docs/DocGenerator.py
-          PREVIOUS_CONTENT=$(cat ./docs/DocGenerator.py)
-          git checkout $LAST_TWO_COMMITS -- ./docs/DocGenerator.py
-          CURRENT_CONTENT=$(cat ./docs/DocGenerator.py)
+          CURRENT_CONTENT=$(git show $LAST_TWO_COMMITS:./docs/DocGenerator.py)
+          PREVIOUS_COMMIT=$(git log --follow --diff-filter=M -n 1 --pretty=format:%H -- ./docs/DocGenerator.py $LAST_TWO_COMMITS)
+          if [ -n "$PREVIOUS_COMMIT" ]; then
+            PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
+          else
+            echo "No previous commit found for the file."
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v3
