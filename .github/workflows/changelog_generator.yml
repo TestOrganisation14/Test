@@ -1,0 +1,34 @@
+name: Changelog Generator
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name'
+        required: true
+
+jobs:
+  fetch-and-run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch_name }}
+
+      - name: Fetch last two versions of DocGenerator.py
+        run: |
+          git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
+          LAST_TWO_COMMITS=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
+          PREVIOUS_CONTENT=$(git show $LAST_TWO_COMMITS^:./docs/DocGenerator.py)
+          CURRENT_CONTENT=$(git show $LAST_TWO_COMMITS:./docs/DocGenerator.py)
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x' 
+
+      - name: Run Python script
+        run: |
+          python ./.github/scripts/changelog_generator.py "$PREVIOUS_CONTENT" "$CURRENT_CONTENT"
+          python ./.github/scripts/config_table_generator.py "$CURRENT_CONTENT"
