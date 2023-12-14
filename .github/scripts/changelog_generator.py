@@ -1,7 +1,6 @@
 import re
 import yaml
 import sys
-import textwrap
 from datetime import datetime
 
 def extract_doc_info(doc_string):

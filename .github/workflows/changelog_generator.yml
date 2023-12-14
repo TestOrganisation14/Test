@@ -33,6 +33,9 @@ jobs:
         with:
           python-version: '3.x' 
 
+      - name: Install PyYAML
+        run: pip install pyyaml
+
       - name: Run Python script
         run: |
           python ./.github/scripts/changelog_generator.py "$PREVIOUS_CONTENT" "$CURRENT_CONTENT"
