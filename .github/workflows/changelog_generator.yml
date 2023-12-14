@@ -26,17 +26,22 @@ jobs:
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
           else
             echo "No previous commit found for the file."
+            exit 1  # Exit the workflow if no previous commit is found
           fi
 
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x' 
+          python-version: '3.x'
 
       - name: Install PyYAML
         run: pip install pyyaml
 
       - name: Run Python script
         run: |
-          python ./.github/scripts/changelog_generator.py "$PREVIOUS_CONTENT" "$CURRENT_CONTENT" v1.0 Rajkumar
-          python ./.github/scripts/config_table_generator.py "$CURRENT_CONTENT"
+          echo "$PREVIOUS_CONTENT" > previous_content.py
+          python ./.github/scripts/changelog_generator.py ./docs/DocGenerator.py previous_content.py v1.0 Rajkumar
+
+      - name: Clean up
+        run: rm previous_content.py
+
