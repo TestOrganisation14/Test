@@ -18,14 +18,14 @@ jobs:
           git fetch --depth=1 origin ${{ github.head_ref }}
           
           # Get the latest commit hash for the file
-          LATEST_COMMIT=$(git log -n 1 --pretty=format:%H -- ./docs/DocGenerator.py)
+          LATEST_COMMIT=$(git log -n 1 --pretty=format:%H -- docs/DocGenerator.py)
           echo "Latest commit hash: $LATEST_COMMIT"
           # Get the commit hash before the latest commit for the file
-          PREVIOUS_COMMIT=$(git log --pretty=format:%H --reverse $LATEST_COMMIT -- ./docs/DocGenerator.py | sed -n 2p)
+          PREVIOUS_COMMIT=$(git log --pretty=format:%H --reverse $LATEST_COMMIT -- docs/DocGenerator.py | sed -n 2p)
           echo "Previous commit hash: $PREVIOUS_COMMIT"
           if [ -n "$PREVIOUS_COMMIT" ]; then
             echo "Previous commit hash: $PREVIOUS_COMMIT"
-            PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
+            PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:docs/DocGenerator.py)
           else
             echo "No previous commit found for the file."
           fi
@@ -41,7 +41,7 @@ jobs:
       - name: Run Python script
         run: |
           echo "$PREVIOUS_CONTENT" > previous_content.py
-          python ./.github/scripts/changelog_generator.py ./docs/DocGenerator.py previous_content.py v1.0 Rajkumar
+          python ./.github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
       - name: Clean up
         run: rm previous_content.py
