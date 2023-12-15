@@ -27,7 +27,7 @@ jobs:
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
           else
             logs=$(git fetch --depth=1 origin ${{ github.event.inputs.branch_name }})
-            echo logs
+            echo $logs
             echo "No previous commit found for the file."
           fi
 
