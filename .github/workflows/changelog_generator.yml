@@ -1,10 +1,7 @@
 name: Changelog Generator
+
 on:
   workflow_dispatch:
-    inputs:
-      branch_name:
-        description: 'Branch name'
-        required: true
 
 jobs:
   fetch-and-run-script:
@@ -14,20 +11,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.branch_name }}
+          ref: ${{ github.head_ref }}
 
       - name: Fetch last two versions of DocGenerator.py
         run: |
-          git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
+          git fetch --depth=1 origin ${{ github.head_ref }}
           
-          LAST_TWO_COMMITS=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
-          CURRENT_CONTENT=$(git show $LAST_TWO_COMMITS:./docs/DocGenerator.py)
-          PREVIOUS_COMMIT=$(git log --diff-filter=M -n 1 --pretty=format:%H --follow -- ./docs/DocGenerator.py)
+          # Get the latest commit hash for the file
+          LATEST_COMMIT=$(git log -n 1 --pretty=format:%H -- ./docs/DocGenerator.py)
+
+          # Get the commit hash before the latest commit for the file
+          PREVIOUS_COMMIT=$(git log --pretty=format:%H --reverse $LATEST_COMMIT -- ./docs/DocGenerator.py | sed -n 2p)
+
           if [ -n "$PREVIOUS_COMMIT" ]; then
+            echo "Previous commit hash: $PREVIOUS_COMMIT"
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
           else
-            logs=$(git fetch --depth=1 origin ${{ github.event.inputs.branch_name }})
-            echo $logs
             echo "No previous commit found for the file."
           fi
 
