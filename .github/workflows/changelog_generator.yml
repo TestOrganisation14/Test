@@ -18,7 +18,7 @@ jobs:
           git fetch --depth=1 origin ${{ github.head_ref }}
           
           # Get the latest commit hash for the file
-          SECOND_LAST_COMMIT=$(git log -n 2 --pretty=format:%H -- ./docs/DocGenerator.py | tail -n 1)
+          SECOND_LAST_COMMIT=$( git log -n 2 --follow --pretty=format:"%H" -- ./docs/DocGenerator.py | tail -n 1)
           echo "Previous commit hash: $SECOND_LAST_COMMIT"
           if [ -n "$SECOND_LAST_COMMIT" ]; then
             echo "Second-to-last commit hash: $SECOND_LAST_COMMIT"
