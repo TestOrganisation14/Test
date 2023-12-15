@@ -18,11 +18,11 @@ jobs:
           git fetch --depth=1 origin ${{ github.head_ref }}
           
           # Get the latest commit hash for the file
-          SECOND_LAST_COMMIT=$( git log -n 2 --follow --pretty=format:"%H" -- ./docs/DocGenerator.py | tail -n 1)
+          SECOND_LAST_COMMIT=$( git log -n 2 --follow --pretty=format:"%H" -- ../../docs/DocGenerator.py | tail -n 1)
           echo "Previous commit hash: $SECOND_LAST_COMMIT"
           if [ -n "$SECOND_LAST_COMMIT" ]; then
             echo "Second-to-last commit hash: $SECOND_LAST_COMMIT"
-            PREVIOUS_CONTENT=$(git show $SECOND_LAST_COMMIT:./docs/DocGenerator.py)
+            PREVIOUS_CONTENT=$(git show $SECOND_LAST_COMMIT:../../docs/DocGenerator.py)
           else
             echo "No previous commit found for the file."
           fi
@@ -38,7 +38,7 @@ jobs:
       - name: Run Python script
         run: |
           echo "$PREVIOUS_CONTENT" > previous_content.py
-          python ./.github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
+          python ../workflows/changelog_generator.yml ../../docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
       - name: Clean up
         run: rm previous_content.py
