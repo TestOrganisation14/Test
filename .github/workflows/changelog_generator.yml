@@ -19,12 +19,14 @@ jobs:
       - name: Fetch last two versions of DocGenerator.py
         run: |
           git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
+          
           LAST_TWO_COMMITS=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
           CURRENT_CONTENT=$(git show $LAST_TWO_COMMITS:./docs/DocGenerator.py)
           PREVIOUS_COMMIT=$(git log --diff-filter=M -n 1 --pretty=format:%H --follow -- ./docs/DocGenerator.py)
           if [ -n "$PREVIOUS_COMMIT" ]; then
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
           else
+            echo git fetch --depth=1 origin ${{ github.event.inputs.branch_name }}
             echo "No previous commit found for the file."
           fi
 
