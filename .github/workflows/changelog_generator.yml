@@ -16,17 +16,18 @@ jobs:
       - name: Fetch last two versions of DocGenerator.py
         run: |
           git fetch --depth=1 origin ${{ github.head_ref }}
-          PWD=$(git log -n 20 --pretty=format:"%H" -- ./docs/DocGenerator.py | grep -m 2 '.' | tac)
-          echo "PWD : $PWD" 
-          # Get the latest commit hash for the file
-          SECOND_LAST_COMMIT=$( git log -n 2 --follow --pretty=format:"%H" -- ../../docs/DocGenerator.py | tail -n 1)
-          echo "Previous commit hash: $SECOND_LAST_COMMIT"
-          if [ -n "$SECOND_LAST_COMMIT" ]; then
-            echo "Second-to-last commit hash: $SECOND_LAST_COMMIT"
-            PREVIOUS_CONTENT=$(git show $SECOND_LAST_COMMIT:../../docs/DocGenerator.py)
-          else
-            echo "No previous commit found for the file."
-          fi
+          
+          # Get the last two commits affecting DocGenerator.py
+          COMMIT_HASHES=$(git log -n 2 --pretty=format:"%H" -- ./docs/DocGenerator.py)
+          echo "Commit hashes: $COMMIT_HASHES"
+          
+          # Fetch content of DocGenerator.py from the last two commits
+          LAST_TWO_COMMITS=$(echo "$COMMIT_HASHES" | tr '\n' ' ')
+          for COMMIT in $LAST_TWO_COMMITS; do
+            CONTENT=$(git show $COMMIT:./docs/DocGenerator.py)
+            echo "Content from commit $COMMIT:"
+            echo "$CONTENT"
+          done
 
       - name: Set up Python
         uses: actions/setup-python@v3
