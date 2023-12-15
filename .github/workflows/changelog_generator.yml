@@ -44,7 +44,8 @@ jobs:
           echo "Content from docs/DocGenerator.py"
           echo "$CONTENT"
           echo "Previous Content from docs/DocGenerator.py"
-          echo "$PREVIOUS_CONTENT"
+          PREV_CONTENT=$(cat previous_content.py)
+          echo "$PREV_CONTENT"
           echo "$PREVIOUS_CONTENT" > previous_content.py
           
           python .github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
