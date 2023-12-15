@@ -1,0 +1,112 @@
+BuildNotes:
+    "Tag": v1.0
+    "Date": 15/12/2023
+    "Author": Rajkumar
+    "Config Changes":
+      "New": []
+      "Changed": []
+      "Removed":
+        - component : mimas
+          files:
+            - file: plaOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+                - key: EnableOpsConfig
+                  description: "The configuration enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: plafullOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+                - key: EnableOpsConfig
+                  description: "The configuration enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: ddOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+                - key: EnableOpsConfig
+                  description: "The configuration enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: trOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+                - key: EnableOpsConfig
+                  description: "The configuration enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: trfullOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+                - key: EnableOpsConfig
+                  description: "The configuration enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: rajOpsconfig
+              "changes":
+                - key: PlaMode
+                  description: "Player software supports multiple modes of operation.
+                                This field configures the software to a specific operational mode."
+                  type: "string"
+                  "sample-value": "dd"
+            - file: playerOpsconfig
+              "changes":
+                - key: EnableOpsConfig
+                  description: "The enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: playerfullOpsconfig
+              "changes":
+                - key: EnableOpsConfig
+                  description: "The enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: doordarshanOpsconfig
+              "changes":
+                - key: EnableOpsConfig
+                  description: "The enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: transcoderOpsconfig
+              "changes":
+                - key: EnableOpsConfig
+                  description: "The enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
+            - file: transcoderfullOpsconfig
+              "changes":
+                - key: EnableOpsConfig
+                  description: "The enables or disables usage of CMS
+                                software for generation Cloudport Player configurations."
+                  type: "string"
+                  "sample-value": "true"
