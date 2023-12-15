@@ -19,10 +19,10 @@ jobs:
           
           # Get the latest commit hash for the file
           LATEST_COMMIT=$(git log -n 1 --pretty=format:%H -- ./docs/DocGenerator.py)
-
+          echo "Latest commit hash: $LATEST_COMMIT"
           # Get the commit hash before the latest commit for the file
           PREVIOUS_COMMIT=$(git log --pretty=format:%H --reverse $LATEST_COMMIT -- ./docs/DocGenerator.py | sed -n 2p)
-
+          echo "Previous commit hash: $PREVIOUS_COMMIT"
           if [ -n "$PREVIOUS_COMMIT" ]; then
             echo "Previous commit hash: $PREVIOUS_COMMIT"
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
