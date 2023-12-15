@@ -139,4 +139,5 @@ if __name__ == "__main__":
     
     # Write content to the specified directory and file
     with open(output_file_path, 'w') as file:
+        print(output_file_path)
         file.write(changelog_content)
