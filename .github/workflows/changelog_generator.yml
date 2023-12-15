@@ -26,7 +26,6 @@ jobs:
             PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:./docs/DocGenerator.py)
           else
             echo "No previous commit found for the file."
-            exit 1  # Exit the workflow if no previous commit is found
           fi
 
       - name: Set up Python
