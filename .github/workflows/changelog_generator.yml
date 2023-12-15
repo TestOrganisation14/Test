@@ -16,7 +16,7 @@ jobs:
       - name: Fetch last two versions of DocGenerator.py
         run: |
           git fetch --depth=1 origin ${{ github.head_ref }}
-          PWD=$(git log -n 2 --follow --pretty=format:"%H" -- "docs/DocGenerator.py" | tail -n 1)
+          PWD=$(git log -n 2 --follow --pretty=format:"%H"  "docs/DocGenerator.py" | tail -n 1)
           echo "PWD : $PWD" 
           # Get the latest commit hash for the file
           SECOND_LAST_COMMIT=$( git log -n 2 --follow --pretty=format:"%H" -- ../../docs/DocGenerator.py | tail -n 1)
