@@ -42,6 +42,15 @@ jobs:
           echo "$PREVIOUS_CONTENT" > previous_content.py
           python .github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.email "rajkumar.shah@amagi.com"
+          git config --global user.name "raj-1513"
+
+          git add changelog.yml
+          git commit -m "This is the commit message"
+          git push origin HEAD:${{ github.head_ref }}
+          
       - name: Clean up
         run: rm previous_content.py
 
