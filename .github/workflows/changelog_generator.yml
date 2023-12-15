@@ -43,11 +43,11 @@ jobs:
           CONTENT=$(cat docs/DocGenerator.py)
           echo "Content from docs/DocGenerator.py"
           echo "$CONTENT"
+          
+          echo "$PREVIOUS_CONTENT" > previous_content.py
           echo "Previous Content from docs/DocGenerator.py"
           PREV_CONTENT=$(cat previous_content.py)
           echo "$PREV_CONTENT"
-          echo "$PREVIOUS_CONTENT" > previous_content.py
-          
           python .github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
       - name: Commit and Push Changes
