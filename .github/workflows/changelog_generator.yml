@@ -49,7 +49,7 @@ jobs:
 
           git add changelog.yml
           git commit -m "This is the commit message"
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:main
           
       - name: Clean up
         run: rm previous_content.py
