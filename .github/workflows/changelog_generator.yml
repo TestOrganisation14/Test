@@ -40,6 +40,7 @@ jobs:
       - name: Run Python script
         run: |
           echo "$PREVIOUS_CONTENT" > previous_content.py
+          echo "${{ secrets.PAT }}"
           python .github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
       - name: Commit and Push Changes
