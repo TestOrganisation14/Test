@@ -45,14 +45,14 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "Your Username"
+          git config --global user.email "rajkumar.shah@amagi.com"
+          git config --global user.name "raj-1513"
       
           git add changelog.yml
           git commit -m "This is the commit message"
           
           # Use the PAT for authentication
-          git push https://username:${{ secrets.PAT }}@github.com/TestOrganisation14/Test.git HEAD:main
+          git push https://raj-1513:${{ secrets.PAT }}@github.com/TestOrganisation14/Test.git HEAD:main
 
           
       - name: Clean up
