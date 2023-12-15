@@ -40,7 +40,7 @@ jobs:
       - name: Run Python script
         run: |
           echo "$PREVIOUS_CONTENT" > previous_content.py
-          python .github/workflows/changelog_generator.yml docs/DocGenerator.py previous_content.py v1.0 Rajkumar
+          python .github/scripts/changelog_generator.py docs/DocGenerator.py previous_content.py v1.0 Rajkumar
 
       - name: Clean up
         run: rm previous_content.py
