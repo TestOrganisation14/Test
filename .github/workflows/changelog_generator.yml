@@ -51,7 +51,7 @@ jobs:
           git commit -m "This is the commit message"
           
           # Use the PAT for authentication
-          git push https://username:${{ secrets.PAT }}@github.com/owner/repo.git HEAD:main
+          git push https://username:${{ secrets.PAT }}@github.com/TestOrganisation14/Test.git HEAD:main
 
           
       - name: Clean up
