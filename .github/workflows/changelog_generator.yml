@@ -18,14 +18,11 @@ jobs:
           git fetch --depth=1 origin ${{ github.head_ref }}
           
           # Get the latest commit hash for the file
-          LATEST_COMMIT=$(git log -n 1 --pretty=format:%H -- ./docs/DocGenerator.py)
-          echo "Latest commit hash: $LATEST_COMMIT"
-          # Get the commit hash of the previous change for the file (follow renames/moves)
-          PREVIOUS_COMMIT=$(git log --pretty=format:%H --follow -- ./docs/DocGenerator.py | grep -B 1 $LATEST_COMMIT | head -n 1)
-          echo "Previous commit hash: $PREVIOUS_COMMIT"
-          if [ -n "$PREVIOUS_COMMIT" ]; then
-            echo "Previous commit hash: $PREVIOUS_COMMIT"
-            PREVIOUS_CONTENT=$(git show $PREVIOUS_COMMIT:docs/DocGenerator.py)
+          SECOND_LAST_COMMIT=$(git log -n 2 --pretty=format:%H -- ./docs/DocGenerator.py | tail -n 1)
+          echo "Previous commit hash: $SECOND_LAST_COMMIT"
+          if [ -n "$SECOND_LAST_COMMIT" ]; then
+            echo "Second-to-last commit hash: $SECOND_LAST_COMMIT"
+            PREVIOUS_CONTENT=$(git show $SECOND_LAST_COMMIT:./docs/DocGenerator.py)
           else
             echo "No previous commit found for the file."
           fi
