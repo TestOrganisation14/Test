@@ -131,13 +131,5 @@ if __name__ == "__main__":
     author = sys.argv[4]
     changes = compare_configs(old_file_path, new_file_path)
     changelog_content = generate_changelog(changes,tag,author)
-    # Define the directory where you want to save changelog.yml
-    output_directory = 'docs/'
-    
-    # Combine the directory and filename to create the full path
-    output_file_path = os.path.join(output_directory, 'changelog.yml')
-    
-    # Write content to the specified directory and file
-    with open(output_file_path, 'w') as file:
-        print(output_file_path)
+    with open('changelog.yml', 'w') as file:
         file.write(changelog_content)
